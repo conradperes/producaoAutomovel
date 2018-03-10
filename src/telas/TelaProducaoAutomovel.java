@@ -1,35 +1,38 @@
 package telas;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import dao.ProducaoAutomovelDAO;
 import producaoAutomovel.ProducaoAutomovel;
 
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.awt.event.ActionEvent;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-
 public class TelaProducaoAutomovel extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5518384075295198102L;
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField modelo;
+	private JTextField nome;
 	private JTextField valor;
 	private JTextField tipo;
-	private JTextField transportadora;
-	private JTextField qtde;
-	private JTextField textField_7;
+	private JTextField data;
+	
 
 	/**
 	 * Launch the application.
@@ -67,19 +70,14 @@ public class TelaProducaoAutomovel extends JFrame {
 		lblNewLabel.setBounds(10, 103, 46, 14);
 		contentPane.add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(142, 100, 240, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		nome = new JTextField();
+		nome.setBounds(142, 100, 240, 20);
+		contentPane.add(nome);
+		nome.setColumns(10);
 		
 		JLabel lblModelo = new JLabel("Modelo:");
 		lblModelo.setBounds(10, 147, 46, 14);
 		contentPane.add(lblModelo);
-		
-		modelo = new JTextField();
-		modelo.setColumns(10);
-		modelo.setBounds(142, 144, 240, 20);
-		contentPane.add(modelo);
 		
 		JLabel lblValorr = new JLabel("Valor (R$):");
 		lblValorr.setBounds(10, 207, 99, 14);
@@ -103,11 +101,6 @@ public class TelaProducaoAutomovel extends JFrame {
 		lblTransportadora.setBounds(10, 344, 99, 14);
 		contentPane.add(lblTransportadora);
 		
-		transportadora = new JTextField();
-		transportadora.setColumns(10);
-		transportadora.setBounds(142, 341, 240, 20);
-		contentPane.add(transportadora);
-		
 		JLabel lblMarca = new JLabel("Marca");
 		lblMarca.setBounds(401, 104, 46, 14);
 		contentPane.add(lblMarca);
@@ -116,55 +109,79 @@ public class TelaProducaoAutomovel extends JFrame {
 		lblQtde.setBounds(401, 150, 46, 14);
 		contentPane.add(lblQtde);
 		
-		qtde = new JTextField();
-		qtde.setColumns(10);
-		qtde.setBounds(533, 147, 240, 20);
-		contentPane.add(qtde);
-		
 		JLabel lblData = new JLabel("Data:");
 		lblData.setBounds(401, 210, 46, 14);
 		contentPane.add(lblData);
 		
-		textField_7 = new JTextField();
-		textField_7.setColumns(10);
-		textField_7.setBounds(533, 207, 240, 20);
-		contentPane.add(textField_7);
+		data = new JTextField();
+		data.setColumns(10);
+		data.setBounds(533, 207, 240, 20);
+		contentPane.add(data);
 		
 		JLabel lblCmbio = new JLabel("C\u00E2mbio:");
 		lblCmbio.setBounds(409, 276, 46, 14);
 		contentPane.add(lblCmbio);
 		
-		JTextField cambio = new JTextField();
-		cambio.setColumns(10);
-		cambio.setBounds(541, 273, 240, 20);
+
+		JComboBox marca = new JComboBox();
+		marca.setModel(new DefaultComboBoxModel(new String[] {"", "Citroen", "BMW", "Pegeout", "Fiat", "Volkswagen", "Ferrari", "Bulgatti", "GM", "Jeep", "Tesla", "Nissan", "Cherry", "Honda", "Toyota", "Lexus", "Lottus", "Suzuki"}));
+		marca.setBounds(533, 100, 240, 20);
+		contentPane.add(marca);
+		
+		JSpinner qtde = new JSpinner();
+		qtde.setBounds(533, 144, 240, 20);
+		contentPane.add(qtde);
+		
+		JComboBox modelo = new JComboBox();
+		modelo.setModel(new DefaultComboBoxModel(new String[] {"", "Citroen C4 Lounge", "Ferrari 74", "Bulgatti Biturbo", "Audio A12", "LandRover", "Fusca", "Lamborguino", "Porsche", "Corvete", "Mercedez Classe A", "Conenzage", "Fiat Uno", "Fusca Betle", "Haboo", "Jeep"}));
+		modelo.setBounds(142, 144, 240, 20);
+		contentPane.add(modelo);
+		
+		JComboBox cambio = new JComboBox();
+		cambio.setModel(new DefaultComboBoxModel(new String[] {"", "Mec\u00E2nico", "Autom\u00E1tico"}));
+		cambio.setBounds(533, 273, 240, 20);
 		contentPane.add(cambio);
 		
-		JButton btnNewButton = new JButton("Gravar");
-		btnNewButton.addActionListener(new ActionListener() {
+		JComboBox transportadora = new JComboBox();
+		transportadora.setModel(new DefaultComboBoxModel(new String[] {"", "Correio", "Sedex", "Fedex", "Aduaneiras", "Navio", "Amazon", "Avi\u00E3o", "Submarino"}));
+		transportadora.setBounds(142, 341, 240, 20);
+		contentPane.add(transportadora);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(66, 76, 707, 14);
+		contentPane.add(separator);
+		
+		JButton botao = new JButton("Gravar");
+		botao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println(textField.getText());
-				ProducaoAutomovel producao = new ProducaoAutomovel();
-				producao.setNome(textField.getText());
-				producao.setCambio(cambio.getText());
-				producao.setMarca("Ferrari");
-				producao.setModelo(modelo.getText());
-				producao.setQuantidade(Integer.parseInt(qtde.getText()));
-				producao.setTipo(tipo.getText());
-				producao.setTransportadora(transportadora.getText());
-				producao.setValor(Double.parseDouble(valor.getText()));
-				ProducaoAutomovelDAO dao = new ProducaoAutomovelDAO();
-				try {
-					dao.insereProducao(producao);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				if(nome.getText()==null || nome.getText().trim().length()==0) {
+					JOptionPane.showMessageDialog(null, "Sua besta! Digite a porra do nome corretamente!");
+				}else {
+					System.out.println(nome.getText());
+					ProducaoAutomovel producao = new ProducaoAutomovel();
+					producao.setNome(nome.getText());
+					producao.setCambio(cambio.getSelectedItem().toString());
+					producao.setMarca(marca.getSelectedItem().toString());
+					producao.setModelo(modelo.getSelectedItem().toString());
+					producao.setQuantidade(Integer.parseInt(qtde.getValue().toString()));
+					producao.setTipo(tipo.getText());
+					producao.setTransportadora(transportadora.getSelectedItem().toString()	);
+					producao.setValor(Double.parseDouble(valor.getText()));
+					ProducaoAutomovelDAO dao = new ProducaoAutomovelDAO();
+					try {
+						dao.insereProducao(producao);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
+				
 				
 				
 			}
 		});
-		btnNewButton.setBounds(227, 397, 89, 23);
-		contentPane.add(btnNewButton);
+		botao.setBounds(227, 397, 89, 23);
+		contentPane.add(botao);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
@@ -174,9 +191,5 @@ public class TelaProducaoAutomovel extends JFrame {
 		btnCancelar.setBounds(401, 397, 89, 23);
 		contentPane.add(btnCancelar);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Citroen", "BMW", "Pegeout", "Fiat", "Volkswagen", "Ferrari", "Bulgatti", "GM", "Jeep", "Tesla", "Nissan", "Cherry", "Honda", "Toyota", "Lexus", "Lottus", "Suzuki"}));
-		comboBox.setBounds(533, 100, 240, 20);
-		contentPane.add(comboBox);
 	}
 }

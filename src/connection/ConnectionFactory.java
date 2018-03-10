@@ -13,10 +13,10 @@ public class ConnectionFactory {
 			if (con == null) {
 				con = DriverManager.getConnection("jdbc:mysql://localhost/trabalhoav1", "root", "rootroot");
 			}
-			return con;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+		return con;
 	}
 	
 	public void closeConnection() {
