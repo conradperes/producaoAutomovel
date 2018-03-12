@@ -144,7 +144,7 @@ public class TelaProducaoAutomovel extends JFrame {
 		
 		JComboBox transportadora = new JComboBox();
 		transportadora.setModel(new DefaultComboBoxModel(new String[] {"", "Correio", "Sedex", "Fedex", "Aduaneiras", "Navio", "Amazon", "Avi\u00E3o", "Submarino"}));
-		transportadora.setBounds(142, 341, 240, 20);
+		transportadora.setBounds(142, 341, 240, 20);	
 		contentPane.add(transportadora);
 		
 		JSeparator separator = new JSeparator();
@@ -156,7 +156,11 @@ public class TelaProducaoAutomovel extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if(nome.getText()==null || nome.getText().trim().length()==0) {
 					JOptionPane.showMessageDialog(null, "Sua besta! Digite a porra do nome corretamente!");
-				}else {
+				}
+				if(marca.getSelectedItem()==null || marca.getSelectedItem().toString().trim().length()==0) {
+					JOptionPane.showMessageDialog(null, "Por favor selecione a Marca");
+				}
+				else {
 					System.out.println(nome.getText());
 					ProducaoAutomovel producao = new ProducaoAutomovel();
 					producao.setNome(nome.getText());
@@ -170,7 +174,7 @@ public class TelaProducaoAutomovel extends JFrame {
 					ProducaoAutomovelDAO dao = new ProducaoAutomovelDAO();
 					try {
 						dao.insereProducao(producao);
-					} catch (SQLException e) {
+					} catch (SQLException e) {	
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -186,6 +190,7 @@ public class TelaProducaoAutomovel extends JFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
 			}
 		});
 		btnCancelar.setBounds(401, 397, 89, 23);
