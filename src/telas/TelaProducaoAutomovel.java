@@ -190,7 +190,7 @@ public class TelaProducaoAutomovel extends JFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.exit(0);
+					
 			}
 		});
 		btnCancelar.setBounds(401, 397, 89, 23);
