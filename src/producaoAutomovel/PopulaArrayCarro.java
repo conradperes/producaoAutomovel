@@ -6,7 +6,6 @@ public class PopulaArrayCarro {
 	
 	public Carro[] populaArray() {
 		Carro[] carros = {new Carro("Ferrari", "Ferrari 74", 1000000.00), 
-				new Carro("Ferrari", "Ferrari 74", 1000000.00),
 				new Carro("BMW", "BMW Z5", 500000.00),
 				new Carro("Fiat", "Fremont", 100000.00),
 				new Carro("Tesla", "Tesla Modelo X", 120000.00),
@@ -23,7 +22,6 @@ public class PopulaArrayCarro {
 	}
 	
 	public Carro buscaCarros(Carro[] carros, String modelo) {
-		
 		for(Carro c: carros) {
 			if(c.getModelo().contains(modelo))
 				return c;

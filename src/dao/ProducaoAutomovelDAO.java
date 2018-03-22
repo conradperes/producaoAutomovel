@@ -2,17 +2,21 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import connection.ConnectionFactory;
 import producaoAutomovel.ProducaoAutomovel;
 
 public class ProducaoAutomovelDAO {
-	
+	ConnectionFactory connectionFactory = new ConnectionFactory();
+	Connection con = connectionFactory.getConnection();
 	public int insereProducao(ProducaoAutomovel producao) throws SQLException {
-		ConnectionFactory connectionFactory = new ConnectionFactory();
-		Connection con = connectionFactory.getConnection();
+		
 
         // cria um preparedStatement
         String sql = "insert into producaoautomovel" +
@@ -41,5 +45,32 @@ public class ProducaoAutomovelDAO {
         
 		return qtdeRegistros;
 	}
+	
+	public List<ProducaoAutomovel>consultaProducao(String nome) throws SQLException{
+		List<ProducaoAutomovel> automoveis = new ArrayList<ProducaoAutomovel>();
+		Statement st = con.createStatement();
+		String sql = "SELECT * FROM producaoautomovel "
+				+ "WHERE nome like '%"+nome+"%'";
+		System.out.println(sql);
+		ResultSet rs = st.executeQuery(sql);
+		while(rs.next()) {
+			ProducaoAutomovel p = new ProducaoAutomovel();
+			p.setNome(rs.getString("nome"));
+			p.setModelo(rs.getString("modelo"));
+			p.setMarca(rs.getString("marca"));
+			automoveis.add(p);
+		}
+		return automoveis;
+	}
+	
+	public static void main(String[] args) {
+		try {
+			List<ProducaoAutomovel> lista = new ProducaoAutomovelDAO().consultaProducao("prod");
+			lista.forEach(item -> System.out.println(item.getModelo()));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 }
