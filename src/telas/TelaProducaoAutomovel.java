@@ -20,6 +20,10 @@ import javax.swing.border.EmptyBorder;
 
 import dao.ProducaoAutomovelDAO;
 import producaoAutomovel.ProducaoAutomovel;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class TelaProducaoAutomovel extends JFrame {
 
@@ -29,7 +33,6 @@ public class TelaProducaoAutomovel extends JFrame {
 	private static final long serialVersionUID = 5518384075295198102L;
 	private JPanel contentPane;
 	private JTextField nome;
-	private JTextField valor;
 	private JTextField tipo;
 	private JTextField data;
 	
@@ -61,6 +64,10 @@ public class TelaProducaoAutomovel extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JLabel valor1 = new JLabel("");
+		valor1.setBounds(142, 207, 240, 14);
+		contentPane.add(valor1);
+		
 		JLabel lblProuoDeAutomveis = new JLabel("Produ\u00E7\u00E3o de Autom\u00F3veis");
 		lblProuoDeAutomveis.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 37));
 		lblProuoDeAutomveis.setBounds(132, 11, 459, 79);
@@ -82,11 +89,6 @@ public class TelaProducaoAutomovel extends JFrame {
 		JLabel lblValorr = new JLabel("Valor (R$):");
 		lblValorr.setBounds(10, 207, 99, 14);
 		contentPane.add(lblValorr);
-		
-		valor = new JTextField();
-		valor.setColumns(10);
-		valor.setBounds(142, 204, 240, 20);
-		contentPane.add(valor);
 		
 		JLabel lblTipo = new JLabel("Tipo:");
 		lblTipo.setBounds(10, 273, 46, 14);
@@ -129,6 +131,17 @@ public class TelaProducaoAutomovel extends JFrame {
 		contentPane.add(marca);
 		
 		JSpinner qtde = new JSpinner();
+		qtde.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				System.out.println(qtde.getValue());
+				
+				double valorCarro=1000.00; 
+				int qtdeEscolhida = Integer.parseInt(qtde.getValue().toString());
+				valor1.setText((valorCarro*qtdeEscolhida)+"");
+				
+			}
+		});
+		
 		qtde.setBounds(533, 144, 240, 20);
 		contentPane.add(qtde);
 		
@@ -170,7 +183,7 @@ public class TelaProducaoAutomovel extends JFrame {
 					producao.setQuantidade(Integer.parseInt(qtde.getValue().toString()));
 					producao.setTipo(tipo.getText());
 					producao.setTransportadora(transportadora.getSelectedItem().toString()	);
-					producao.setValor(Double.parseDouble(valor.getText()));
+					//producao.setValor(Double.parseDouble(valor.getText()));
 					ProducaoAutomovelDAO dao = new ProducaoAutomovelDAO();
 					try {
 						dao.insereProducao(producao);
@@ -195,6 +208,8 @@ public class TelaProducaoAutomovel extends JFrame {
 		});
 		btnCancelar.setBounds(401, 397, 89, 23);
 		contentPane.add(btnCancelar);
+		
+		
 		
 	}
 }
