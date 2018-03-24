@@ -19,6 +19,8 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import dao.ProducaoAutomovelDAO;
+import producaoAutomovel.Carro;
+import producaoAutomovel.PopulaArrayCarro;
 import producaoAutomovel.ProducaoAutomovel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -146,6 +148,13 @@ public class TelaProducaoAutomovel extends JFrame {
 		contentPane.add(qtde);
 		
 		JComboBox modelo = new JComboBox();
+		modelo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				PopulaArrayCarro popula = new PopulaArrayCarro();
+				Carro carro = popula.buscaCarros(popula.populaArray(), modelo.getSelectedItem().toString());
+				valor1.setText(Double.toString(carro.getValor()));
+			}
+		});
 		modelo.setModel(new DefaultComboBoxModel(new String[] {"", "Citroen C4 Lounge", "Ferrari 74", "Bulgatti Biturbo", "Audio A12", "LandRover", "Fusca", "Lamborguino", "Porsche", "Corvete", "Mercedez Classe A", "Conenzage", "Fiat Uno", "Fusca Betle", "Haboo", "Jeep"}));
 		modelo.setBounds(142, 144, 240, 20);
 		contentPane.add(modelo);
