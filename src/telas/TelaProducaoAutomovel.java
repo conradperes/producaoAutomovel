@@ -136,10 +136,8 @@ public class TelaProducaoAutomovel extends JFrame {
 		qtde.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 				System.out.println(qtde.getValue());
-				
-				double valorCarro=1000.00; 
 				int qtdeEscolhida = Integer.parseInt(qtde.getValue().toString());
-				valor1.setText((valorCarro*qtdeEscolhida)+"");
+				valor1.setText((Double.parseDouble(valor1.getText())*qtdeEscolhida)+"");
 				
 			}
 		});
@@ -192,7 +190,7 @@ public class TelaProducaoAutomovel extends JFrame {
 					producao.setQuantidade(Integer.parseInt(qtde.getValue().toString()));
 					producao.setTipo(tipo.getText());
 					producao.setTransportadora(transportadora.getSelectedItem().toString()	);
-					//producao.setValor(Double.parseDouble(valor.getText()));
+					producao.setValor(Double.parseDouble(valor1.getText()));
 					ProducaoAutomovelDAO dao = new ProducaoAutomovelDAO();
 					try {
 						dao.insereProducao(producao);
