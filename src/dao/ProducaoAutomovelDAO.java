@@ -59,6 +59,7 @@ public class ProducaoAutomovelDAO {
 				p.setNome(rs.getString("nome"));
 				p.setModelo(rs.getString("modelo"));
 				p.setMarca(rs.getString("marca"));
+				p.setValor(rs.getDouble("valor"));
 				automoveis.add(p);
 			}
 		} finally {
